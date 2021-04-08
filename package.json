@@ -4,9 +4,11 @@
     "description": "koa 2 example with rest api",
     "main": "app.js",
     "scripts": {
-        "start": "node app.js"
+        "start": "node --use_strict app.js"
     },
     "keywords": [
+        "websocket",
+        "ws",
         "koa",
         "rest",
         "api"
@@ -26,6 +28,7 @@
         "mz": "^2.7.0",
         "node-uuid": "^1.4.8",
         "nunjucks": "^2.4.2",
-        "sequelize": "6.6.2"
+        "sequelize": "6.6.2",
+        "ws": "7.4.4"
     }
 }

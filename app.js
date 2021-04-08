@@ -6,9 +6,6 @@
  * 服务程序启动首页，相当于 Java 的 main 方法, 业务代码
  */
 
-// 实例化网络请求对象
-const Koa = require('koa');
-
 const bodyParser = require('koa-bodyparser');
 
 // 控制器，内部实现注册了各个接口
@@ -18,7 +15,12 @@ const controller = require('./controller');
 const rest = require('./utils/rest');
 
 // 实例化网络请求对象
+const Koa = require('koa');
+// 实例化网络请求对象
 const app = new Koa();
+
+// 引入 webSocket 并启动监听
+// const webSocketSerice = require('./wsSocket');
 
 // log request URL: 全局请求拦截，增加日志 log 埋点后在执行下一步方法
 app.use(async (ctx, next) => {
@@ -30,10 +32,10 @@ app.use(async (ctx, next) => {
     console.log(`Process ${ctx.request.method} ${ctx.request.url}...`);
   //http 预请求处理(post/put/delete 请求在正式请求之前会先发送一个OPTIONS的预请求，只需要把这个OPTIONS的预请求正常返回，后续的请求就会正常执行)
   if (ctx.request.method === 'OPTIONS') {
-      ctx.body = "OK";
+    ctx.body = "OK";
   } else {  
-      //继续执行api请求
-      await next();
+    //继续执行api请求
+    await next();
   }
 });
 
@@ -51,6 +53,11 @@ app.use(rest.restify());
 app.use(controller());
 
 // 设置后台服务监听端口
-app.listen(8089);
+let server = app.listen(8089);
+
+// 服务器开启 webSocket 服务
+// webSocketSerice.initWss(app, server);
+
 console.log('app started at port 8089...');
+
 
