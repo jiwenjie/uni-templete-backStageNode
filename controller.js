@@ -1,3 +1,10 @@
+/*
+ * @Author: jiwenjie5 
+ * @Date: 2021-04-Th 11:33:28 
+ * @Last Modified by:   jiwenjie5 
+ * @Last Modified time: 2021-04-Th 11:33:28 
+ * @Desc: 获取请求，注册接口请求路由
+ */
 
 const fs = require('fs');
 
@@ -26,6 +33,7 @@ function addMapping(router, mapping) {
     }
 }
 
+// 添加路由请求控制方法，读取 js 路由接口文件遍历之后添加到路由中
 function addControllers(router, dir) {
     fs.readdirSync(__dirname + '/' + dir).filter((f) => {
         return f.endsWith('.js');
